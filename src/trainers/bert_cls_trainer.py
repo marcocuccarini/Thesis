@@ -82,7 +82,7 @@ class BertClsTrainer():
             print('======== Epoch {:} / {:} ========'.format(epoch_i + 1, n_epochs))
             print('Training...')
 
-            self.metric_collection.reset()
+            #self.metric_collection.reset()
 
             # Measure how long the training epoch takes.
             t0 = time.time()

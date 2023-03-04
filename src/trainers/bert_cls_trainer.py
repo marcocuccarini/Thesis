@@ -15,7 +15,7 @@ from src.utils.utils import plot_loss
 class BertClsTrainer():
     def __init__(self) -> None:
      
-    metric_collection = torchmetrics.MetricCollection({
+        self.metric_collection = torchmetrics.MetricCollection({
             'accuracy_micro' : torchmetrics.Accuracy(task='multiclass',num_classes=23, average='micro'),
             'accuracy_macro' : torchmetrics.Accuracy(task='multiclass',num_classes=23, average='macro'),
             'accuracy_weighted' : torchmetrics.Accuracy(task='multiclass',num_classes=23, average='weighted'),

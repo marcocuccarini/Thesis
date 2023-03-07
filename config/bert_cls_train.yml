@@ -1,4 +1,4 @@
-save: False 
+save: True
 seed: 4321
 batch_size: 5
 n_epochs: 3

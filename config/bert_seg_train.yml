@@ -4,9 +4,9 @@ batch_size: 24
 n_epochs: 2
 learning_rate: 1e-5
 
-model: 'dbmdz/bert-base-italian-xxl-uncased'
-#'xlm-roberta-large'
+model: 'm-polignano-uniba/bert_uncased_L-12_H-768_A-12_italian_alb3rt0'
 #'m-polignano-uniba/bert_uncased_L-12_H-768_A-12_italian_alb3rt0'
+#'xlm-roberta-large'
 #'dbmdz/bert-base-italian-xxl-uncased'
 #'bert-base-multilingual-cased'
 

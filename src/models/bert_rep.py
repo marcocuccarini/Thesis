@@ -142,11 +142,11 @@ class BertRep():
         with torch.no_grad():                          
             outputs = self.model(input_ids, attention_mask, output_hidden_states= True)
         hs = outputs['hidden_states'][-1].cpu()
-        print(hs.shape)
+        #print(hs.shape)
         hs = hs[:,0,:] ## [CLS] hidden states
-        print(hs.shape)
+        #print(hs.shape)
         hs = torch.mean(hs, 0) ## spans average
-        print(hs.shape)
+        #print(hs.shape)
         return hs.tolist()
     
 

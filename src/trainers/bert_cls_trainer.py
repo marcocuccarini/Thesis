@@ -121,7 +121,7 @@ class BertClsTrainer():
 
                 # Perform a forward pass in mixed precision
                 with torch.cuda.amp.autocast():
-                    print(b_labels)
+
                     outputs = model(b_input_ids, 
                                     attention_mask=b_input_mask, 
                                     labels=b_labels)
@@ -134,8 +134,7 @@ class BertClsTrainer():
                 # Move logits and labels to CPU
                 logits = logits.detach().cpu()
                 label_ids = b_labels.to('cpu')
-                print(logits)
-                print(label_ids)
+            
 
                 batch_metric = self.metric_collection.update(logits, label_ids)
 

@@ -190,7 +190,7 @@ def twitter_preprocess(text:str) -> str:
     return text
     
 
-def train_val_split(df, tok_name,  val_perc=0.2, subsample = False):
+def train_val_split(df, tok_name,  val_perc=0.2, subsample = False, classType=23):
     """
     It takes a dataframe, a tokenizer name, a validation percentage and a subsample flag. It then splits
     the dataframe into a training and validation set, and returns a HyperionDataset object for each
@@ -221,4 +221,4 @@ def train_val_split(df, tok_name,  val_perc=0.2, subsample = False):
 
     train_df = pd.concat(train_list)
     val_df = pd.concat(val_list)
-    return HyperionDataset(train_df, tok_name), HyperionDataset(val_df, tok_name)
+    return HyperionDataset(train_df, tok_name, classType), HyperionDataset(val_df, tok_name, classType)

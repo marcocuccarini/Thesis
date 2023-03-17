@@ -107,7 +107,7 @@ def uniform_labels(df):
 
 
 def encode_labels(df,classType):
-  if(class=23):
+  if(classType=23):
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
     return le.transform(df['Repertorio'])
@@ -118,7 +118,7 @@ def encode_labels(df,classType):
     
 
 def encode_str_label(rep:str,classType):
-  if(class=23):
+  if(classType=23):
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
     return le.transform([rep])
@@ -130,7 +130,7 @@ def encode_str_label(rep:str,classType):
     
 
 def decode_labels(encoded_labels,classType):
-  if(class=23):
+  if(classType=23):
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
     return le.inverse_transform(encoded_labels)

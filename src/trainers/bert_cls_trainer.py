@@ -13,28 +13,29 @@ from src.utils.utils import plot_loss
 
 # This class is a wrapper for the training and testing of a Bert model for classification of dicscursive repertoires
 class BertClsTrainer():
-    def __init__(self) -> None:
+    def __init__(self,n_label) -> None:
+
      
         self.metric_collection = torchmetrics.MetricCollection({
-            'accuracy_micro' : torchmetrics.Accuracy(task='multiclass',num_classes=23, average='micro'),
-            'accuracy_macro' : torchmetrics.Accuracy(task='multiclass',num_classes=23, average='macro'),
-            'accuracy_weighted' : torchmetrics.Accuracy(task='multiclass',num_classes=23, average='weighted'),
-            'accuracy_none' : torchmetrics.Accuracy(task='multiclass',num_classes=23, average='none'),
+            'accuracy_micro' : torchmetrics.Accuracy(task='multiclass',num_classes=n_label, average='micro'),
+            'accuracy_macro' : torchmetrics.Accuracy(task='multiclass',num_classes=n_label, average='macro'),
+            'accuracy_weighted' : torchmetrics.Accuracy(task='multiclass',num_classes=n_label, average='weighted'),
+            'accuracy_none' : torchmetrics.Accuracy(task='multiclass',num_classes=n_label, average='none'),
 
-            'f1_micro' : torchmetrics.F1Score(task='multiclass',num_classes=23, average='micro'),
-            'f1_macro' : torchmetrics.F1Score(task='multiclass',num_classes=23, average='macro'),
-            'f1_weighted' : torchmetrics.F1Score(task='multiclass',num_classes=23, average='weighted'),
-            'f1_none' : torchmetrics.F1Score(task='multiclass',num_classes=23, average='none'),
+            'f1_micro' : torchmetrics.F1Score(task='multiclass',num_classes=n_label, average='micro'),
+            'f1_macro' : torchmetrics.F1Score(task='multiclass',num_classes=n_label, average='macro'),
+            'f1_weighted' : torchmetrics.F1Score(task='multiclass',num_classes=n_label, average='weighted'),
+            'f1_none' : torchmetrics.F1Score(task='multiclass',num_classes=n_label, average='none'),
 
-            'precision_micro' : torchmetrics.Precision(task='multiclass',num_classes=23, average='micro'),
-            'precision_macro' : torchmetrics.Precision(task='multiclass',num_classes=23, average='macro'),
-            'precision_weighted' : torchmetrics.Precision(task='multiclass',num_classes=23, average='weighted'),
-            'precision_none' : torchmetrics.Precision(task='multiclass',num_classes=23, average='none'),
+            'precision_micro' : torchmetrics.Precision(task='multiclass',num_classes=n_label, average='micro'),
+            'precision_macro' : torchmetrics.Precision(task='multiclass',num_classes=n_label, average='macro'),
+            'precision_weighted' : torchmetrics.Precision(task='multiclass',num_classes=n_label, average='weighted'),
+            'precision_none' : torchmetrics.Precision(task='multiclass',num_classes=n_label, average='none'),
 
-            'recall_micro' : torchmetrics.Recall(num_classes=23, task='multiclass', average='micro'),
-            'recall_macro' : torchmetrics.Recall(num_classes=23, task='multiclass', average='macro'),
-            'recall_weighted' : torchmetrics.Recall(num_classes=23, task='multiclass', average='weighted'),
-            'recall_none' : torchmetrics.Recall(num_classes=23, task='multiclass', average='none')
+            'recall_micro' : torchmetrics.Recall(num_classes=n_label, task='multiclass', average='micro'),
+            'recall_macro' : torchmetrics.Recall(num_classes=n_label, task='multiclass', average='macro'),
+            'recall_weighted' : torchmetrics.Recall(num_classes=n_label, task='multiclass', average='weighted'),
+            'recall_none' : torchmetrics.Recall(num_classes=n_label, task='multiclass', average='none')
         })
         
     def fit(self, model, train_dataset, val_dataset, batch_size, lr, n_epochs, loss_fn):

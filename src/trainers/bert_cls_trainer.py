@@ -120,6 +120,7 @@ class BertClsTrainer():
 
                 # Perform a forward pass in mixed precision
                 with torch.cuda.amp.autocast():
+                    print(b_labels)
                     outputs = model(b_input_ids, 
                                     attention_mask=b_input_mask, 
                                     labels=b_labels)

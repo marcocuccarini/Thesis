@@ -110,7 +110,6 @@ class BertClsTrainer():
                 #   [0]: input ids 
                 #   [1]: attention masks
                 #   [2]: labels
-                print(batch)
                 b_input_ids = batch['input_ids'].to(device)
                 b_input_mask = batch['attention_mask'].to(device)
                 b_labels = batch['labels'].to(device)
@@ -134,6 +133,8 @@ class BertClsTrainer():
                 # Move logits and labels to CPU
                 logits = logits.detach().cpu()
                 label_ids = b_labels.to('cpu')
+                print(logits)
+                print(label_ids)
 
                 batch_metric = self.metric_collection.update(logits, label_ids)
 

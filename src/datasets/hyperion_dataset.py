@@ -35,10 +35,12 @@ LABELS = [
                 'valutazione'
         ]
 
+LABELS_MACRO=['green','yellow','red']
+
 class HyperionDataset(torch.utils.data.Dataset):
     
 
-    def __init__(self, df, tokenizer_name):
+    def __init__(self, df, tokenizer_name,class):
         #fill_null_features(df)
         df = filter_empty_labels(df)
         #df = twitter_preprocess(df)
@@ -54,7 +56,7 @@ class HyperionDataset(torch.utils.data.Dataset):
         truncation=True,
         return_tensors="pt"
     )
-        self.labels = encode_labels(df).tolist()    
+        self.labels = encode_labels(df,class).tolist()    
 
     def __getitem__(self, idx):
         item = {key: val[idx] for key, val in self.encodings.items()}
@@ -104,20 +106,39 @@ def uniform_labels(df):
     df['Repertorio'].replace('previsioni','previsione', inplace=True)
 
 
-def encode_labels(df):
+def encode_labels(df,class):
+  if(class=23):
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
     return le.transform(df['Repertorio'])
+  else:
+    le = preprocessing.LabelEncoder()
+    le.fit(LABELS_MACRO)
+    return le.transform(df['Repertorio'])
+    
 
-def encode_str_label(rep:str):
+def encode_str_label(rep:str,class):
+  if(class=23):
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
     return le.transform([rep])
+  else:
+    
+    le = preprocessing.LabelEncoder()
+    le.fit(LABELS_MACRO)
+    return le.transform([rep])
+    
 
-def decode_labels(encoded_labels):
+def decode_labels(encoded_labels,class):
+  if(class=23):
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
     return le.inverse_transform(encoded_labels)
+  else:
+    le = preprocessing.LabelEncoder()
+    le.fit(LABELS_MACRO)
+    return le.inverse_transform(encoded_labels)
+    
 
 def twitter_preprocess(text:str) -> str:
     """

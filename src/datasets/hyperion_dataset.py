@@ -40,7 +40,7 @@ LABELS_MACRO=['green','yellow','red']
 class HyperionDataset(torch.utils.data.Dataset):
     
 
-    def __init__(self, df, tokenizer_name,classType):
+    def __init__(self, df, tokenizer_name,classType=23):
         #fill_null_features(df)
         df = filter_empty_labels(df)
         #df = twitter_preprocess(df)

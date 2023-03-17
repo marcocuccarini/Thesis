@@ -106,7 +106,7 @@ def uniform_labels(df):
     df['Repertorio'].replace('previsioni','previsione', inplace=True)
 
 
-def encode_labels(df,classType):
+def encode_labels(df,classType=23):
   if(classType==23):
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
@@ -117,7 +117,7 @@ def encode_labels(df,classType):
     return le.transform(df['Repertorio'])
     
 
-def encode_str_label(rep:str,classType):
+def encode_str_label(rep:str,classType=23):
   if(classType==23):
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
@@ -129,7 +129,7 @@ def encode_str_label(rep:str,classType):
     return le.transform([rep])
     
 
-def decode_labels(encoded_labels,classType):
+def decode_labels(encoded_labels,classType=23):
   if(classType==23):
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)

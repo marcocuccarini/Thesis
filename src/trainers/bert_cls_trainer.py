@@ -57,7 +57,7 @@ class BertClsTrainer():
         validation_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=True)
 
         #Adam algorithm optimized for tranfor architectures
-        optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
+        optimizer = torch.optim.AdamW(model.parameters(), lr=lr, warmup_step=400)
         #scheduler = get_constant_schedule_with_warmup(optimizer, num_warmup_steps=300)
 
         # Scaler for mixed precision

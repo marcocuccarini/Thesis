@@ -64,14 +64,14 @@ def dowloadEmbedding(BERT,AlBERTo,BERT3,BERT3_Un,MultiBERT,BERTCased,Electra,Typ
         test_df['embElectra'] = test_df['Stralci_predetti'].map(embeddings_method_Electra).values.tolist()
     return train_df,test_df
 
-def modelComposition(A,B,C,D,ModelA,ModelB,ModelC,ModelD,Task,X_train,X_test):
+def modelComposition(A,B,C,D,,train_df,test_df,ModelA,ModelB,ModelC,ModelD,Task,X_train,X_test):
     X_train=[[((i*A)+(j*B)+(z*C)+(D*h))/(A+B+C+D) for i, j, z, h in zip(x, y , o, k)] for x, y, o, k  in zip( train_df["emb"+ModelA].to_list(),train_df["emb"+ModelB].to_list(),train_df["emb"+ModelC].to_list(),train_df["emb"+ModelD].to_list())]
     X_test=[[((i*A)+(j*B)+(z*C)+(D*h))/(A+B+C+D) for i, j, z, h in zip(x, y, o, k)] for x, y, o, k in zip(test_df["emb"+ModelA].to_list(),test_df["emb"+ModelB].to_list(),test_df["emb"+ModelC].to_list(),test_df["emb"+ModelD].to_list())]
     y_train=train_df[Task].to_list()
     y_test=test_df[Task].to_list()
     return X_train,X_test,y_train,y_test
 
-def black_box_function1(C,gamma):
+def black_box_function1(C,gamma,X_train,X_test,y_train,y_test):
     # C: SVC hyper parameter to optimize for.
     model = SVC(C = C, gamma=gamma, class_weight="balanced")
     model.fit(X_train, y_train)
@@ -79,7 +79,8 @@ def black_box_function1(C,gamma):
     f = f1_score(y_test, y_score, average='macro')+f1_score(y_test, y_score, pos_label=0)+f1_score(y_test, y_score, pos_label=1)
     #f=f1_score(y_test, y_score, pos_label=0)
     return f
-def black_box_function2(C):
+
+def black_box_function2(C,X_train,X_test,y_train,y_test):
     # C: SVC hyper parameter to optimize for.
     model = SVC(C = C, gamma='scale', class_weight="balanced")
     model.fit(X_train, y_train)
@@ -89,7 +90,7 @@ def black_box_function2(C):
     return f
 
 
-def SupportVectorMachine(class_weight,C,kernel,gamma):
+def SupportVectorMachine(class_weight,C,kernel,gamma,X_train,X_test,y_train,y_test):
     clf = svm.SVC(class_weight=class_weight, C=C, kernel=kernel,gamma= gamma)
     clf.fit(X_train, y_train)
     y_pred_test=clf.predict(X_test)
@@ -104,7 +105,7 @@ def SupportVectorMachine(class_weight,C,kernel,gamma):
     return clf
 
 
-def CrossValidation(model, cv, scoring):   
+def CrossValidation(model, cv, scoring,X_train,X_test,y_train,y_test):   
     scores = cross_val_score(
       model, X_train, y_train, cv=5, scoring='f1_macro')
     print("------------")
@@ -119,7 +120,7 @@ def CrossValidation(model, cv, scoring):
     return sum(scores)/len(scores),scores
 
 
-def SupportVectorMachineValidation(class_weight, C, kernel,gamma):
+def SupportVectorMachineValidation(class_weight, C, kernel,gamma,X_train,X_test,y_train,y_test):
     X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.1, random_state=45)
     clf = svm.SVC(class_weight=class_weight, C=C, kernel=kernel,gamma=gamma)
     clf.fit(X_train, y_train)

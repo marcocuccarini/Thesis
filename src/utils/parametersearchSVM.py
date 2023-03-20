@@ -16,8 +16,8 @@ from src.models.bert_rep import BertRep
 
 
 
-def dowloadEmbedding(BERT,AlBERTo,BERT3,BERT3_Un,MultiBERT,BERTCased,Electra,TypeEmb, config): 
-    seed_everything(config['seed'])
+def dowloadEmbedding(BERT,AlBERTo,BERT3,BERT3_Un,MultiBERT,BERTCased,Electra,TypeEmb): 
+    seed_everything(1234)
     embeddings_method=['cls_last_hidden_state','last_hidden_state_average','last_hidden_state_concat','four_last_hidden_state_concat','four_last_hidden_state_sum']
 
     train_df = pd.read_csv('data/processed/sentipolcAlBERTo/TrainAlBERToSentiPolc.csv', converters={'rep': literal_eval, 'spans': literal_eval})

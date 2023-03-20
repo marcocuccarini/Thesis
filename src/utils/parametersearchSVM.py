@@ -64,7 +64,7 @@ def dowloadEmbedding(BERT,AlBERTo,BERT3,BERT3_Un,MultiBERT,BERTCased,Electra,Typ
         test_df['embElectra'] = test_df['Stralci_predetti'].map(embeddings_method_Electra).values.tolist()
     return train_df,test_df
 
-def modelComposition(A,B,C,D,ModelA,ModelB,ModelC,ModelD,Task):
+def modelComposition(A,B,C,D,ModelA,ModelB,ModelC,ModelD,Task,X_train,X_test):
     X_train=[[((i*A)+(j*B)+(z*C)+(D*h))/(A+B+C+D) for i, j, z, h in zip(x, y , o, k)] for x, y, o, k  in zip( train_df["emb"+ModelA].to_list(),train_df["emb"+ModelB].to_list(),train_df["emb"+ModelC].to_list(),train_df["emb"+ModelD].to_list())]
     X_test=[[((i*A)+(j*B)+(z*C)+(D*h))/(A+B+C+D) for i, j, z, h in zip(x, y, o, k)] for x, y, o, k in zip(test_df["emb"+ModelA].to_list(),test_df["emb"+ModelB].to_list(),test_df["emb"+ModelC].to_list(),test_df["emb"+ModelD].to_list())]
     y_train=train_df[Task].to_list()

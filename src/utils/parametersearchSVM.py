@@ -147,4 +147,4 @@ def BayesianOpt(black_box_function,pbounds,random_state):
                                      random_state = random_state,
                                      allow_duplicate_points=True)
     optimizer.maximize(init_points = 5, n_iter = 10)
-  print("Best result: {}; f(x) = {}.".format(optimizer.max["params"], optimizer.max["target"]))
+    print("Best result: {}; f(x) = {}.".format(optimizer.max["params"], optimizer.max["target"]))

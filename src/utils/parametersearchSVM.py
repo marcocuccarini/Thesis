@@ -118,7 +118,7 @@ def CrossValidation(model, cv, scoring):
     return sum(scores)/len(scores),scores
 
 
-def SupportVectorMachineValidation(class_weight, C, kernel,gamma)
+def SupportVectorMachineValidation(class_weight, C, kernel,gamma):
     X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.1, random_state=45)
     clf = svm.SVC(class_weight=class_weight, C=C, kernel=kernel,gamma=gamma)
     clf.fit(X_train, y_train)

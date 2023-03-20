@@ -16,7 +16,7 @@ from src.models.bert_rep import BertRep
 
 
 
-def dowloadEmbedding(BERT,AlBERTo,BERT3,BERT3_Un,MultiBERT,BERTCased,Electra,TypeEmb): 
+def dowloadEmbedding(BERT,AlBERTo,BERT3,BERT3_Un,MultiBERT,BERTCased,Electra,TypeEmb, config): 
     seed_everything(config['seed'])
     embeddings_method=['cls_last_hidden_state','last_hidden_state_average','last_hidden_state_concat','four_last_hidden_state_concat','four_last_hidden_state_sum']
 

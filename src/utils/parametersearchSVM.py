@@ -23,7 +23,7 @@ def dowloadEmbedding(BERT,AlBERTo,BERT3,BERT3_Un,MultiBERT,BERTCased,Electra,Typ
     train_df = pd.read_csv('data/processed/sentipolcAlBERTo/TrainAlBERToSentiPolc.csv')
     test_df = pd.read_csv('data/processed/sentipolcAlBERTo/TestAlBERToSentiPolc.csv')
     
-    if(Head)
+    if(Head):
         train_df=train_df.head(30)
         test_df=test_df.head(30)
 

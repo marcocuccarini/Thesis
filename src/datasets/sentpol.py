@@ -33,7 +33,7 @@ class PolDataset1(torch.utils.data.Dataset):
         padding=True,
         truncation=True,
         return_tensors="pt")
-        self.labels = encode_labels(df,classType).tolist()
+        self.labels = encode_labels_bin(df).tolist()
         self.encodingsBert = df['emb'].tolist()
 
     def __getitem__(self, idx):
@@ -42,3 +42,8 @@ class PolDataset1(torch.utils.data.Dataset):
         item['encBe']= self.encodingsBert[idx]
         
         return item
+
+def encode_labels_bin(df):
+    le = preprocessing.LabelEncoder()
+    le.fit([0,1])
+    return le.transform(df['label'])

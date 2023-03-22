@@ -19,8 +19,8 @@ class PolDataset1(torch.utils.data.Dataset):
 
     def __init__(self, df, tokenizer_name,classType=2):
         #fill_null_features(df)
-        df = filter_empty_labels(df)
-        df = twitter_preprocess(df)
+        #df = filter_empty_labels(df)
+        #df = twitter_preprocess(df)
       
         tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
         self.encodings = tokenizer(

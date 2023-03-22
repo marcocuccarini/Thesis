@@ -35,9 +35,10 @@ class PolDataset1(torch.utils.data.Dataset):
         self.encodingsBert = df['emb'].tolist()
 
     def __getitem__(self, idx):
-        item = {key: val[idx] for key, val in self.encodings.items()}
+        item = {}
         item['labels'] = self.labels[idx]
         item['encBe']= self.encodingsBert[idx]
+        
         return item
 
 

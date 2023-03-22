@@ -20,7 +20,7 @@ class PolDataset1(torch.utils.data.Dataset):
     def __init__(self, df, tokenizer_name,classType=2):
         #fill_null_features(df)
         df = filter_empty_labels(df)
-        #df = twitter_preprocess(df)
+        df = twitter_preprocess(df)
       
         tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
         self.encodings = tokenizer(
@@ -35,7 +35,7 @@ class PolDataset1(torch.utils.data.Dataset):
         self.encodingsBert = df['emb'].tolist()
 
     def __getitem__(self, idx):
-        item = {}
+        item = {key: val[idx] for key, val in self.encodings.items()}
         item['labels'] = self.labels[idx]
         item['encBe']= self.encodingsBert[idx]
         
@@ -65,18 +65,13 @@ def fill_null_features(df):
 
 #Delete examples with empty label
 def filter_empty_labels(df):
-    filter = df["Repertorio"] != ""
+    filter = df["text"] != ""
     return df[filter]
 
 #Convert to lower case
 def to_lower_case(df):
     return df.applymap(str.lower)
 
-
-#Lables uniformation uncased
-def uniform_labels(df):
-    df['Repertorio'].replace('implicazioni','implicazione', inplace=True)
-    df['Repertorio'].replace('previsioni','previsione', inplace=True)
 
 
 def encode_labels(df,classType=23):

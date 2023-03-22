@@ -13,39 +13,34 @@ LABELS = [1,0]
 
 
 
-class HyperionDataset(torch.utils.data.Dataset):
+import torch
+class PolDataset1(torch.utils.data.Dataset):
     
 
     def __init__(self, df, tokenizer_name,classType=2):
         #fill_null_features(df)
         df = filter_empty_labels(df)
         #df = twitter_preprocess(df)
-        df = to_lower_case(df)
-        uniform_labels(df)          
+      
         tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
         self.encodings = tokenizer(
-        df['sent'].tolist(),
+        df['text'].tolist(),
         max_length=512,
         add_special_tokens=True,
         return_attention_mask=True,
         padding=True,
         truncation=True,
-        return_tensors="pt"
-    )
-        self.labels = encode_labels(df['labels'],classType).tolist()
-        self.emb=df['emb'].to_list()    
+        return_tensors="pt")
+        self.labels = encode_labels(df,classType).tolist()
+        self.encodingsBert = df['emb'].tolist()
 
     def __getitem__(self, idx):
         item = {key: val[idx] for key, val in self.encodings.items()}
-        
         item['labels'] = self.labels[idx]
+        item['encBe']= self.encodingsBert[idx]
         return item
 
-    def __len__(self):
-        return len(self.labels)
-    
-    def labels_list(self):
-        return LABELS
+
 
 
 # Dataset loading and preprocessing

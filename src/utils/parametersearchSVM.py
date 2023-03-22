@@ -16,12 +16,17 @@ from src.models.bert_rep import BertRep
 
 
 
-def dowloadEmbedding(BERT,AlBERTo,BERT3,BERT3_Un,MultiBERT,BERTCased,Electra,TypeEmb): 
+def dowloadEmbedding(BERT,AlBERTo,BERT3,BERT3_Un,MultiBERT,BERTCased,Electra,TypeEmb,Head=False): 
     seed_everything(1234)
     embeddings_method=['cls_last_hidden_state','last_hidden_state_average','last_hidden_state_concat','four_last_hidden_state_concat','four_last_hidden_state_sum']
 
     train_df = pd.read_csv('data/processed/sentipolcAlBERTo/TrainAlBERToSentiPolc.csv')
     test_df = pd.read_csv('data/processed/sentipolcAlBERTo/TestAlBERToSentiPolc.csv')
+    
+    if(Head)
+        train_df=train_df.head(30)
+        test_df=test_df.head(30)
+
     if(BERT):
         bert_rep=BertRep("MiBo/RepML")
         embeddings_method_BERT = getattr(bert_rep, embeddings_method[TypeEmb])

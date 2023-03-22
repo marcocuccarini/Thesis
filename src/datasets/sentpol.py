@@ -36,6 +36,10 @@ class PolDataset1(torch.utils.data.Dataset):
         self.labels = encode_labels_bin(df).tolist()
         self.encodingsBert = df['emb'].tolist()
 
+
+    def __len__(self):
+        return len(self.labels)
+
     def __getitem__(self, idx):
         item = {key: val[idx] for key, val in self.encodings.items()}
         item['labels'] = self.labels[idx]

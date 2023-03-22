@@ -112,10 +112,11 @@ def SupportVectorMachine(class_weight,C,kernel,gamma,X_train,X_test,y_train,y_te
 
 def CrossValidation(model, cv, scoring,X_train,X_test,y_train,y_test):   
     scores = cross_val_score(
-      model, X_train, y_train, cv=5, scoring='f1_macro')
+      model, X_train, y_train, cv=cv, scoring='f1_macro')
     print("------------")
 
     print('Punteggio per ogni subset')
+
     print(scores)
     print("------------")
 
@@ -126,7 +127,7 @@ def CrossValidation(model, cv, scoring,X_train,X_test,y_train,y_test):
 
 
 def SupportVectorMachineValidation(class_weight, C, kernel,gamma,X_train,X_test,y_train,y_test):
-    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.1, random_state=45)
+    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.1, random_state=int(random.rondom()*200))
     clf = svm.SVC(class_weight=class_weight, C=C, kernel=kernel,gamma=gamma)
     clf.fit(X_train, y_train)
     y_pred_val=clf.predict(X_val)

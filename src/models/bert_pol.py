@@ -14,17 +14,10 @@ class BertPol():
         self.model = AutoModelForSequenceClassification.from_pretrained(model_type).to(self.device)
         self.model.eval()
     
-    def predict(self, text:List[str]) -> List[str]:
-        encoded_text = self.tokenizer(text,
-                                    max_length=512,
-                                    add_special_tokens=True,
-                                    return_attention_mask=True,
-                                    padding='max_length',
-                                    truncation=True,
-                                    return_tensors="pt"
-                                    )
-        input_ids = encoded_text['input_ids'].to(self.device)
-        attention_mask = encoded_text['attention_mask'].to(self.device)
+    def predictEmb(self, encoded_text,attention_mask) -> List[str]:
+
+        input_ids = encoded_text.to(self.device)
+        attention_mask = attentio_mask.to(self.device)
 
         with torch.no_grad():                          
             logits = self.model(input_ids, attention_mask)['logits']

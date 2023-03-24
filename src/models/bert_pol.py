@@ -24,7 +24,7 @@ class BertPol():
         logits = logits.detach().cpu()
         probs = logits.softmax(dim=1)
         preds = probs.argmax(dim=1)
-        return decode_labels(preds).tolist()
+        return preds
     
     
 

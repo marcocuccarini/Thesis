@@ -5,13 +5,14 @@ import torch
 import numpy as np
 import datetime
 import matplotlib.pyplot as plt
+import pandas as pd
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import ConfusionMatrixDisplay
 
 
 
 def getEmbedding():
-  import pandas as pd
+  
   train_Alb_Em = np.load('/content/data/embedded/train_embeddings_poltweetAlBERTo.npy',allow_pickle=True,)
   test_Alb_Em = np.load('/content/data/embedded/test_embeddings_poltweet_AlBERTo.npy',allow_pickle=True,)
 

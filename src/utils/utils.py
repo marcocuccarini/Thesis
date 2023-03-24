@@ -8,7 +8,17 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import ConfusionMatrixDisplay
 
+def getEmbedding():
+  train_Alb_Em = np.load('/content/data/embedded/train_embeddings_poltweetAlBERTo.npy',allow_pickle=True,)
+  test_Alb_Em = np.load('/content/data/embedded/test_embeddings_poltweet_AlBERTo.npy',allow_pickle=True,)
 
+  train_df = pd.read_csv('data/processed/sentipolcAlBERTo/TrainAlBERToSentiPolc.csv')
+  test_df = pd.read_csv('data/processed/sentipolcAlBERTo/TestAlBERToSentiPolc.csv')
+
+  train_df['embAlBERT']=train_Alb_Em.tolist()
+  test_df['embAlBERT']=test_Alb_Em.tolist()
+
+  return train_df,test_df
 #Deterministic mode
 def seed_everything(seed=1464):
     random.seed(seed)

@@ -17,7 +17,7 @@ class BertPol():
     def predictEmb(self, encoded_text,attention_mask) -> List[str]:
 
         input_ids = encoded_text.to(self.device)
-        attention_mask = attentio_mask.to(self.device)
+        attention_mask = attention_mask.to(self.device)
 
         with torch.no_grad():                          
             logits = self.model(input_ids, attention_mask)['logits']

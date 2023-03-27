@@ -15,7 +15,7 @@ LABELS=[0,1]
 class SentDataset(torch.utils.data.Dataset):
     
 
-    def __init__(self, df, tokenizer_name):
+    def __init__(self, df, tokenizer_name, task="subj"):
         #fill_null_features(df)
         df = filter_empty_labels(df)
         #df = twitter_preprocess(df)
@@ -29,7 +29,7 @@ class SentDataset(torch.utils.data.Dataset):
         truncation=True,
         return_tensors="pt"
     )
-        self.labels = df.tolist()    
+        self.labels = df[task].tolist()    
 
     def __getitem__(self, idx):
         item = {key: val[idx] for key, val in self.encodings.items()}

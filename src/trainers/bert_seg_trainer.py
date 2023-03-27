@@ -17,7 +17,7 @@ from src.models.bert_segmenter import decode_segmentation, split_by_prediction, 
 # This class is a wrapper for the training and testing of a Bert model for text segmentation
 class BertSegTrainer():
 
-    def fit(self, model, train_dataset, val_dataset, batch_size, lr, n_epochs, loss_fn):
+    def fit(self, model, train_dataset, val_dataset, batch_size, lr, n_epochs, loss_fn, adam):
 
         output_dict = {}
         output_dict['train_metrics'] = []

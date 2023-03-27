@@ -19,8 +19,6 @@ class SentDataset(torch.utils.data.Dataset):
         #fill_null_features(df)
         df = filter_empty_labels(df)
         #df = twitter_preprocess(df)
-        df = to_lower_case(df)
-        uniform_labels(df)          
         tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
         self.encodings = tokenizer(
         df['text'].tolist(),
@@ -31,7 +29,7 @@ class SentDataset(torch.utils.data.Dataset):
         truncation=True,
         return_tensors="pt"
     )
-        self.labels = encode_labels(df).tolist()    
+        self.labels = df.tolist()    
 
     def __getitem__(self, idx):
         item = {key: val[idx] for key, val in self.encodings.items()}
@@ -71,8 +69,6 @@ def filter_empty_labels(df):
     return df[filter]
 
 #Convert to lower case
-def to_lower_case(df):
-    return df.applymap(str.lower)
 
 
 #

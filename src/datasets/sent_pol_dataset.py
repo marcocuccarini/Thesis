@@ -15,7 +15,7 @@ LABELS=[0,1]
 class SentDataset(torch.utils.data.Dataset):
     
 
-    def __init__(self, df, tokenizer_name,classType=23):
+    def __init__(self, df, tokenizer_name):
         #fill_null_features(df)
         df = filter_empty_labels(df)
         #df = twitter_preprocess(df)
@@ -23,7 +23,7 @@ class SentDataset(torch.utils.data.Dataset):
         uniform_labels(df)          
         tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
         self.encodings = tokenizer(
-        df['Stralcio'].tolist(),
+        df['text'].tolist(),
         max_length=512,
         add_special_tokens=True,
         return_attention_mask=True,
@@ -31,7 +31,7 @@ class SentDataset(torch.utils.data.Dataset):
         truncation=True,
         return_tensors="pt"
     )
-        self.labels = encode_labels(df,classType).tolist()    
+        self.labels = encode_labels(df).tolist()    
 
     def __getitem__(self, idx):
         item = {key: val[idx] for key, val in self.encodings.items()}
@@ -77,14 +77,14 @@ def to_lower_case(df):
 
 #
 
-def encode_labels(df,classType=23):
+def encode_labels(df):
     
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
     return le.transform(df['Repertorio'])
     
 
-def encode_str_label(rep:str,classType=23):
+def encode_str_label(rep:str):
 
     
     le = preprocessing.LabelEncoder()
@@ -92,7 +92,7 @@ def encode_str_label(rep:str,classType=23):
     return le.transform([rep])
     
 
-def decode_labels(encoded_labels,classType=23):
+def decode_labels(encoded_labels):
     
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
@@ -149,7 +149,7 @@ def twitter_preprocess(text:str) -> str:
     return text
     
 
-def train_val_split(df, tok_name,  val_perc=0.2, subsample = False, task="subj"):
+def train_val_split(df, tok_name,  val_perc=0.1, subsample = False, task="subj"):
     """
     It takes a dataframe, a tokenizer name, a validation percentage and a subsample flag. It then splits
     the dataframe into a training and validation set, and returns a HyperionDataset object for each
@@ -180,4 +180,4 @@ def train_val_split(df, tok_name,  val_perc=0.2, subsample = False, task="subj")
 
     train_df = pd.concat(train_list)
     val_df = pd.concat(val_list)
-    return SentDataset(train_df, tok_name, classType), SentDataset(val_df, tok_name, classType)
+    return SentDataset(train_df, tok_name), SentDataset(val_df, tok_name, classType)

@@ -9,35 +9,10 @@ from ekphrasis.classes.preprocessor import TextPreProcessor
 from ekphrasis.classes.tokenizer import SocialTokenizer
 from ekphrasis.dicts.emoticons import emoticons
 
-LABELS = [
-                'anticipazione',
-                'causa',
-                'commento',
-                'conferma',
-                'considerazione',
-                'contrapposizione',
-                'deresponsabilizzazione',
-                'descrizione',
-                'dichiarazione di intenti',
-                'generalizzazione',
-                'giudizio',
-                'giustificazione',
-                'implicazione',
-                'non risposta',
-                'opinione',
-                'possibilità',
-                'prescrizione',
-                'previsione',
-                'proposta',
-                'ridimensionamento',
-                'sancire',
-                'specificazione',
-                'valutazione'
-        ]
 
-LABELS_MACRO=['green','yellow','red']
+LABELS=[0,1]
 
-class HyperionDataset(torch.utils.data.Dataset):
+class SentDataset(torch.utils.data.Dataset):
     
 
     def __init__(self, df, tokenizer_name,classType=23):
@@ -92,7 +67,7 @@ def fill_null_features(df):
 
 #Delete examples with empty label
 def filter_empty_labels(df):
-    filter = df["Repertorio"] != ""
+    filter = df["text"] != ""
     return df[filter]
 
 #Convert to lower case
@@ -100,45 +75,29 @@ def to_lower_case(df):
     return df.applymap(str.lower)
 
 
-#Lables uniformation uncased
-def uniform_labels(df):
-    df['Repertorio'].replace('implicazioni','implicazione', inplace=True)
-    df['Repertorio'].replace('previsioni','previsione', inplace=True)
-
+#
 
 def encode_labels(df,classType=23):
-  if(classType==23):
+    
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
-    return le.transform(df['Repertorio'])
-  else:
-    le = preprocessing.LabelEncoder()
-    le.fit(LABELS_MACRO)
     return le.transform(df['Repertorio'])
     
 
 def encode_str_label(rep:str,classType=23):
-  if(classType==23):
-    le = preprocessing.LabelEncoder()
-    le.fit(LABELS)
-    return le.transform([rep])
-  else:
+
     
     le = preprocessing.LabelEncoder()
-    le.fit(LABELS_MACRO)
+    le.fit(LABELS)
     return le.transform([rep])
     
 
 def decode_labels(encoded_labels,classType=23):
-  if(classType==23):
+    
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
     return le.inverse_transform(encoded_labels)
-  else:
-    le = preprocessing.LabelEncoder()
-    le.fit(LABELS_MACRO)
-    return le.inverse_transform(encoded_labels)
-    
+  
 
 def twitter_preprocess(text:str) -> str:
     """
@@ -190,7 +149,7 @@ def twitter_preprocess(text:str) -> str:
     return text
     
 
-def train_val_split(df, tok_name,  val_perc=0.2, subsample = False, classType=23):
+def train_val_split(df, tok_name,  val_perc=0.2, subsample = False, task="subj"):
     """
     It takes a dataframe, a tokenizer name, a validation percentage and a subsample flag. It then splits
     the dataframe into a training and validation set, and returns a HyperionDataset object for each
@@ -202,7 +161,7 @@ def train_val_split(df, tok_name,  val_perc=0.2, subsample = False, classType=23
     (optional)
     :return: A tuple of two datasets, one for training and one for validation.
     """
-    gb = df.groupby('Repertorio')
+    gb = df.groupby(task)
     train_list = []
     val_list = []
     for x in gb.groups:
@@ -221,4 +180,4 @@ def train_val_split(df, tok_name,  val_perc=0.2, subsample = False, classType=23
 
     train_df = pd.concat(train_list)
     val_df = pd.concat(val_list)
-    return HyperionDataset(train_df, tok_name, classType), HyperionDataset(val_df, tok_name, classType)
+    return SentDataset(train_df, tok_name, classType), SentDataset(val_df, tok_name, classType)

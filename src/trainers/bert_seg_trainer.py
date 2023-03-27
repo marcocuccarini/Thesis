@@ -36,8 +36,18 @@ class BertSegTrainer():
         validation_dataloader = DataLoader(
             val_dataset, batch_size=batch_size, shuffle=True)
 
+
+        if(not adam):
+
+            optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9)
+            scheduler = ReduceLROnPlateau(optimizer, 'min')
+        else:
+            optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
+       
+        
+
         # Adam algorithm optimized for tranfor architectures
-        optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
+
         #scheduler = get_constant_schedule_with_warmup(optimizer, num_warmup_steps=300)
 
         # Scaler for mixed precision
@@ -193,6 +203,9 @@ class BertSegTrainer():
                     loss = loss_fn(logits.view(-1, model.num_labels), b_labels.view(-1))
 
                 # Accumulate the validation loss.
+                if(not adam):
+                    scheduler.step(loss)
+
                 total_val_loss += loss.item()
 
                 # Move logits and labels to CPU

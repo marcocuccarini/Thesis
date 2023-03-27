@@ -176,4 +176,4 @@ def train_val_split(df, tok_name,  val_perc=0.1, subsample = False, task="subj")
 
     train_df = pd.concat(train_list)
     val_df = pd.concat(val_list)
-    return SentDataset(train_df, tok_name), SentDataset(val_df, tok_name, classType)
+    return SentDataset(train_df, tok_name), SentDataset(val_df, tok_name)

@@ -48,6 +48,7 @@ class BertClsTrainer():
 
 
         loss_prev=0
+        cont=0
 
         torch.cuda.empty_cache()
         #----------TRAINING

@@ -231,7 +231,7 @@ class BertClsTrainer():
                         cont+=1
                     else:
                         cont=0
-                    if cont=patience:
+                    if cont>=patience:
                         break
 
                     loss_prev=loss

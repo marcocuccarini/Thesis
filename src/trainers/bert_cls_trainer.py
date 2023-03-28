@@ -38,13 +38,16 @@ class BertClsTrainer():
             'recall_none' : torchmetrics.Recall(num_classes=n_label, task='multiclass', average='none')
         })
         
-    def fit(self, model, train_dataset, val_dataset, batch_size, lr, n_epochs, loss_fn):
+    def fit(self, model, train_dataset, val_dataset, batch_size, lr, n_epochs, loss_fn, patience):
         
         output_dict = {}
         output_dict['train_metrics'] = []
         output_dict['train_loss'] = []
         output_dict['val_metrics'] = []
         output_dict['val_loss'] = []
+
+
+        loss_prev=0
 
         torch.cuda.empty_cache()
         #----------TRAINING
@@ -61,6 +64,8 @@ class BertClsTrainer():
 
         #Adam algorithm optimized for tranfor architectures
         optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
+
+
         scheduler = get_constant_schedule_with_warmup(optimizer, num_warmup_steps=400)
         
         # Scaler for mixed precision
@@ -222,6 +227,15 @@ class BertClsTrainer():
                     
                     loss = loss_fn(logits.view(-1, model.num_labels), b_labels.view(-1))
                     
+                    if(loss>=loss_prev):
+                        cont+=1
+                    else:
+                        cont=0
+                    if cont=patience:
+                        break
+
+                    loss_prev=loss
+
                 # Accumulate the validation loss.
                 total_val_loss += loss.item()
 

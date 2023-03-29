@@ -13,13 +13,14 @@ from sklearn.metrics import ConfusionMatrixDisplay
 
 def getEmbedding(pathTest,pathTrain,name):
   
-  train_Alb_Em = np.load(pathTrain,allow_pickle=True).item()
-  test_Alb_Em = np.load(pathTest,allow_pickle=True).item()
+  train_Alb_Em = np.load(pathTrain,allow_pickle=True)
+  test_Alb_Em = np.load(pathTest,allow_pickle=True)
+  print(train_Alb_Em)
 
   train_df = pd.read_csv('data/processed/sentipolcAlBERTo/TrainAlBERToSentiPolc.csv')
   test_df = pd.read_csv('data/processed/sentipolcAlBERTo/TestAlBERToSentiPolc.csv')
 
-  train_df['emb'+name]=train_Alb_Em.tolist()
+  train_df['emb'+name]=train_Alb_Em['embBERT']
   test_df['emb'+name]=test_Alb_Em.tolist()
 
   return train_df,test_df

@@ -13,8 +13,8 @@ from sklearn.metrics import ConfusionMatrixDisplay
 
 def getEmbedding(pathTest,pathTrain,name):
   
-  train_Alb_Em = np.load(pathTrain,allow_pickle=True,)
-  test_Alb_Em = np.load(pathTest,allow_pickle=True,)
+  train_Alb_Em = np.load(pathTrain,allow_pickle=True).item()
+  test_Alb_Em = np.load(pathTest,allow_pickle=True).item()
 
   train_df = pd.read_csv('data/processed/sentipolcAlBERTo/TrainAlBERToSentiPolc.csv')
   test_df = pd.read_csv('data/processed/sentipolcAlBERTo/TestAlBERToSentiPolc.csv')
@@ -25,7 +25,6 @@ def getEmbedding(pathTest,pathTrain,name):
   return train_df,test_df
 #Deterministic mode
 def dowloadEmbedding(BERT,AlBERTo,BERT3,BERT3_Un,MultiBERT,BERTCased,Electra,TypeEmb,Head=0): 
-    seed_everything(1234)
     embeddings_method=['cls_last_hidden_state','last_hidden_state_average','last_hidden_state_concat','four_last_hidden_state_concat','four_last_hidden_state_sum']
 
     train_df = pd.read_csv('data/processed/sentipolcAlBERTo/TrainAlBERToSentiPolc.csv')

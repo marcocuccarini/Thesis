@@ -2,6 +2,8 @@ from xmlrpc.client import Boolean
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import torch
 from typing import List
+from src.models.bert_rep import *
+
 
 from src.datasets.hyperion_dataset import decode_labels
 

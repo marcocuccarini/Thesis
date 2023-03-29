@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import ConfusionMatrixDisplay
+from src.models.bert_rep import *
 
 
 

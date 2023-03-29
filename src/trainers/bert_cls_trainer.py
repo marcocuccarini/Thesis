@@ -67,7 +67,7 @@ class BertClsTrainer():
         optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
 
 
-        scheduler = get_constant_schedule_with_warmup(optimizer, num_warmup_steps=400)
+        #scheduler = get_constant_schedule_with_warmup(optimizer, num_warmup_steps=400)
         
         # Scaler for mixed precision
         scaler = torch.cuda.amp.GradScaler()

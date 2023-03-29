@@ -17,7 +17,7 @@ from src.models.bert_segmenter import decode_segmentation, split_by_prediction, 
 # This class is a wrapper for the training and testing of a Bert model for text segmentation
 class BertSegTrainer():
 
-    def fit(self, model, train_dataset, val_dataset, batch_size, lr, n_epochs, loss_fn, adam):
+    def fit(self, model, train_dataset, val_dataset, batch_size, lr, n_epochs, loss_fn):
 
         output_dict = {}
         output_dict['train_metrics'] = []
@@ -37,12 +37,7 @@ class BertSegTrainer():
             val_dataset, batch_size=batch_size, shuffle=True)
 
 
-        if(not adam):
-
-            optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9)
-            scheduler = ReduceLROnPlateau(optimizer, 'min')
-        else:
-            optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
+        optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
        
         
 
@@ -203,8 +198,7 @@ class BertSegTrainer():
                     loss = loss_fn(logits.view(-1, model.num_labels), b_labels.view(-1))
 
                 # Accumulate the validation loss.
-                if(not adam):
-                    scheduler.step(loss)
+
 
                 total_val_loss += loss.item()
 

@@ -88,7 +88,7 @@ class BertRepEnsamble():
             logits2 = self.model1(input_ids2, attention_mask2, output_hidden_states= True)['logits']
         
 
-        logits=torch.cat((logits1['hidden_states'], logits2['hidden_states']), 1)
+        logits=torch.cat((logits1['hidden_states'], logits2['hidden_states']))
 
        
         return logits

@@ -84,13 +84,13 @@ class BertRepEnsamble():
 
 
         with torch.no_grad():                          
-            logits1 = self.model1(input_ids1, attention_mask1, output_hidden_states= True)['logits']
-            logits2 = self.model1(input_ids2, attention_mask2, output_hidden_states= True)['logits']
+            res1 = self.model1(input_ids1, attention_mask1, output_hidden_states= True)
+            res2 = self.model2(input_ids2, attention_mask2, output_hidden_states= True)
         
-
+            
 
        
-        return logits1
+        return res1
     
     
     def last_hidden_state_average(self, text:List[str]) -> List[str]:

@@ -50,7 +50,6 @@ class BertRepEnsamble():
         with torch.no_grad():                          
             logits1 = self.model1(input_ids1, attention_mask1)['logits']
             logits2 = self.model1(input_ids2, attention_mask2)['logits']
-            print(logits1+logits2)
 
         logits=logits1+logits2
         logits = logits.detach().cpu()

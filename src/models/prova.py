@@ -87,7 +87,7 @@ class BertRepEnsamble():
 
 
        
-        return logits1, logits2
+        return logits2['hidden_states']
     
     
     def last_hidden_state_average(self, text:List[str]) -> List[str]:

@@ -85,9 +85,9 @@ class BertRepEnsamble():
 
         with torch.no_grad():                          
             res1 = self.model1(input_ids1, attention_mask1, output_hidden_states= True)['hidden_states']
-            res2 = self.model2(input_ids2, attention_mask2, output_hidden_states= True)['hidden_states']
+            #res2 = self.model2(input_ids2, attention_mask2, output_hidden_states= True)['hidden_states']
         
-            
+
 
        
         return res1

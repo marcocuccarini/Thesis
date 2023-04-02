@@ -85,10 +85,10 @@ class BertRepEnsamble():
             logits2 = self.model1(input_ids2, attention_mask2, output_hidden_states= True)['logits']
         
 
-        logits=torch.cat((logits1['hidden_states'][-1], logits1['hidden_states'][-1]), 1)
 
        
-        return logits
+        return logits1['hidden_states'][-1]
+
     
     
     def last_hidden_state_average(self, text:List[str]) -> List[str]:

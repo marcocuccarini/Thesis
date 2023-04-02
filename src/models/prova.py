@@ -55,7 +55,7 @@ class BertRepEnsamble():
         logits = logits.detach().cpu()
         probs = logits.softmax(dim=1)
         preds = probs.argmax(dim=1)
-        return decode_labels(preds).tolist()
+        return preds
     
     def last_hidden_state_average(self, text:List[str]) -> List[str]:
         encoded_text = self.tokenizer(text,

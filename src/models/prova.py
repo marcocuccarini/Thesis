@@ -48,8 +48,8 @@ class BertRepEnsamble():
 
 
         with torch.no_grad():                          
-            logits1 = self.model1(input_ids1, attention_mask1, last_hidden_state= True)
-            logits2 = self.model2(input_ids2, attention_mask2, last_hidden_state= True)
+            logits1 = self.model1(input_ids1, attention_mask1)[0]
+            logits2 = self.model2(input_ids2, attention_mask2)[0]
 
 
         return logits1

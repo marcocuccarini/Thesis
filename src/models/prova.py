@@ -21,7 +21,7 @@ class BertRepEnsamble():
         self.model2 = AutoModelForSequenceClassification.from_pretrained(model_type2).to(self.device)
         self.model2.eval()
 
-    def predictMedia1(self, text:List[str]) -> List[str]:
+    def predictConc(self, text:List[str]) -> List[str]:
         encoded_text1 = self.tokenizer1(text,
                                     max_length=512,
                                     add_special_tokens=True,
@@ -52,9 +52,10 @@ class BertRepEnsamble():
             logits2 = self.model2(input_ids2, attention_mask2)[0]
 
         log=torch.cat((logits1, logits2), 1)
-        print(log[0])
-
-
+        log = log.detach().cpu()
+        probs = log.softmax(dim=1)
+        preds = probs.argmax(dim=1)
+        return preds
         return logits1
     
     def predictMedia(self, text:List[str]) -> List[str]:

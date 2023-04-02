@@ -20,6 +20,39 @@ class BertRepEnsamble():
         self.device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
         self.model2 = AutoModelForSequenceClassification.from_pretrained(model_type2).to(self.device)
         self.model2.eval()
+
+    def predictMedia1(self, text:List[str]) -> List[str]:
+        encoded_text1 = self.tokenizer1(text,
+                                    max_length=512,
+                                    add_special_tokens=True,
+                                    return_attention_mask=True,
+                                    padding='max_length',
+                                    truncation=True,
+                                    return_tensors="pt"
+                                    )
+        encoded_text2 = self.tokenizer2(text,
+                                    max_length=512,
+                                    add_special_tokens=True,
+                                    return_attention_mask=True,
+                                    padding='max_length',
+                                    truncation=True,
+                                    return_tensors="pt"
+                                    )
+
+        input_ids1 = encoded_text1['input_ids'].to(self.device)
+        attention_mask1 = encoded_text1['attention_mask'].to(self.device)
+
+
+        input_ids2 = encoded_text2['input_ids'].to(self.device)
+        attention_mask2 = encoded_text2['attention_mask'].to(self.device)
+
+
+        with torch.no_grad():                          
+            logits1 = self.model1(input_ids1, attention_mask1)['hidden_states'][-1]
+            logits2 = self.model2(input_ids2, attention_mask2)['hidden_states'][-1]
+
+
+        return logits1
     
     def predictMedia(self, text:List[str]) -> List[str]:
         encoded_text1 = self.tokenizer1(text,
@@ -57,42 +90,8 @@ class BertRepEnsamble():
         preds = probs.argmax(dim=1)
         return preds
 
-    def predictConcatenazione(self, text:List[str]) -> List[str]:
-        encoded_text1 = self.tokenizer1(text,
-                                    max_length=512,
-                                    add_special_tokens=True,
-                                    return_attention_mask=True,
-                                    padding='max_length',
-                                    truncation=True,
-                                    return_tensors="pt"
-                                    )
-        encoded_text2 = self.tokenizer2(text,
-                                    max_length=512,
-                                    add_special_tokens=True,
-                                    return_attention_mask=True,
-                                    padding='max_length',
-                                    truncation=True,
-                                    return_tensors="pt"
-                                    )
-
-        input_ids1 = encoded_text1['input_ids'].to(self.device)
-        attention_mask1 = encoded_text1['attention_mask'].to(self.device)
 
 
-        input_ids2 = encoded_text2['input_ids'].to(self.device)
-        attention_mask2 = encoded_text2['attention_mask'].to(self.device)
-
-
-        with torch.no_grad():                          
-            res1 = self.model1(input_ids1, attention_mask1, output_hidden_states= True)
-            #res2 = self.model2(input_ids2, attention_mask2, output_hidden_states= True)['hidden_states']
-        
-
-
-       
-        return res1
-    
-    
     def last_hidden_state_average(self, text:List[str]) -> List[str]:
         encoded_text = self.tokenizer(text,
                                     max_length=512,

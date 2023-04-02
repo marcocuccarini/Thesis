@@ -51,8 +51,11 @@ class BertRepEnsamble():
             logits1 = self.model1(input_ids1, attention_mask1)['logits']
             logits2 = self.model1(input_ids2, attention_mask2)['logits']
 
-
-        return logits1
+        logits=(logits1+logits2)/2
+        logits = logits.detach().cpu()
+        probs = logits.softmax(dim=1)
+        preds = probs.argmax(dim=1)
+        return preds
 
     def predictConcatenazione(self, text:List[str]) -> List[str]:
         encoded_text1 = self.tokenizer1(text,
@@ -87,7 +90,7 @@ class BertRepEnsamble():
 
 
        
-        return logits2['hidden_states']
+        return logits1
     
     
     def last_hidden_state_average(self, text:List[str]) -> List[str]:

@@ -51,6 +51,9 @@ class BertRepEnsamble():
             logits1 = self.model1(input_ids1, attention_mask1)[0]
             logits2 = self.model2(input_ids2, attention_mask2)[0]
 
+        log=torch.cat((logits1, logits2), 1)
+        print(log[0])
+
 
         return logits1
     

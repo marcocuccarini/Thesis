@@ -48,7 +48,7 @@ class BertRepEnsamble():
 
 
         with torch.no_grad():                          
-            logits = self.model(input_ids, attention_mask)['logits']
+            logits = self.model(input_ids1, attention_mask1)['logits']
             print(logits)
         logits = logits.detach().cpu()
         probs = logits.softmax(dim=1)

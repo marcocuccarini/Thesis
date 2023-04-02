@@ -11,14 +11,14 @@ from src.datasets.hyperion_dataset import decode_labels
 # the model.
 class BertRepEnsamble():
     def __init__(self, model_type1, model_type2):
-        self.tokenizer1 = AutoTokenizer.from_pretrained(model_type)
+        self.tokenizer1 = AutoTokenizer.from_pretrained(model_type1)
         self.device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
-        self.model1 = AutoModelForSequenceClassification.from_pretrained(model_type).to(self.device)
+        self.model1 = AutoModelForSequenceClassification.from_pretrained(model_type1).to(self.device)
         self.model1.eval()
 
-        self.tokenizer2 = AutoTokenizer.from_pretrained(model_type)
+        self.tokenizer2 = AutoTokenizer.from_pretrained(model_type2)
         self.device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
-        self.model2 = AutoModelForSequenceClassification.from_pretrained(model_type).to(self.device)
+        self.model2 = AutoModelForSequenceClassification.from_pretrained(model_type2).to(self.device)
         self.model2.eval()
     
     def predict(self, text:List[str]) -> List[str]:

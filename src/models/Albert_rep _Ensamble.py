@@ -9,15 +9,20 @@ from src.datasets.hyperion_dataset import decode_labels
 
 # It loads the pretrained model for repertoires prediction and the tokenizer, and provides methods to extract the hidden states of
 # the model.
-class BertRep():
-    def __init__(self, model_type):
-        self.tokenizer = AutoTokenizer.from_pretrained(model_type)
+class BertRepEnsamble():
+    def __init__(self, model_type1, model_type2):
+        self.tokenizer1 = AutoTokenizer.from_pretrained(model_type)
         self.device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
-        self.model = AutoModelForSequenceClassification.from_pretrained(model_type).to(self.device)
-        self.model.eval()
+        self.model1 = AutoModelForSequenceClassification.from_pretrained(model_type).to(self.device)
+        self.model1.eval()
+
+        self.tokenizer2 = AutoTokenizer.from_pretrained(model_type)
+        self.device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+        self.model2 = AutoModelForSequenceClassification.from_pretrained(model_type).to(self.device)
+        self.model2.eval()
     
     def predict(self, text:List[str]) -> List[str]:
-        encoded_text = self.tokenizer(text,
+        encoded_text1 = self.tokenizer1(text,
                                     max_length=512,
                                     add_special_tokens=True,
                                     return_attention_mask=True,
@@ -25,11 +30,26 @@ class BertRep():
                                     truncation=True,
                                     return_tensors="pt"
                                     )
-        input_ids = encoded_text['input_ids'].to(self.device)
-        attention_mask = encoded_text['attention_mask'].to(self.device)
+        encoded_text2 = self.tokenizer2(text,
+                                    max_length=512,
+                                    add_special_tokens=True,
+                                    return_attention_mask=True,
+                                    padding='max_length',
+                                    truncation=True,
+                                    return_tensors="pt"
+                                    )
+
+        input_ids1 = encoded_text1['input_ids'].to(self.device)
+        attention_mask1 = encoded_text1['attention_mask'].to(self.device)
+
+
+        input_ids2 = encoded_text2['input_ids'].to(self.device)
+        attention_mask2 = encoded_text2['attention_mask'].to(self.device)
+
 
         with torch.no_grad():                          
             logits = self.model(input_ids, attention_mask)['logits']
+            print(logits)
         logits = logits.detach().cpu()
         probs = logits.softmax(dim=1)
         preds = probs.argmax(dim=1)

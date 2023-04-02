@@ -149,7 +149,8 @@ class BertRep():
         #print(hs.shape)
         hs = torch.mean(hs, 0) ## spans average
         #print(hs.shape)
-        return hs.tolist()
+        #.to_list()
+        return hs
     
 
     

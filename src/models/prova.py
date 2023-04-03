@@ -52,6 +52,8 @@ class BertRepEnsamble():
             logits2 = self.model2(input_ids2, attention_mask2)[0]
 
         log=torch.cat((logits1, logits2), 1)
+        log=log.flatten(start_dim= 1)
+
         log = log.detach().cpu()
         probs = log.softmax(dim=1)
         preds = probs.argmax(dim=1)
@@ -89,7 +91,6 @@ class BertRepEnsamble():
             logits2 = self.model2(input_ids2, attention_mask2)['logits']
 
         logits=(logits1+logits2)/2
-        logits=logits.flatten(start_dim= 1)
         logits = logits.detach().cpu()
         probs = logits.softmax(dim=1)
         preds = probs.argmax(dim=1)

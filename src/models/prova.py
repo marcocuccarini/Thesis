@@ -21,6 +21,46 @@ class BertRepEnsamble():
         self.model2 = AutoModelForSequenceClassification.from_pretrained(model_type2).to(self.device)
         self.model2.eval()
 
+
+ def predictConcNoSoft(self, text:List[str]) -> List[str]:
+        encoded_text1 = self.tokenizer1(text,
+                                    max_length=512,
+                                    add_special_tokens=True,
+                                    return_attention_mask=True,
+                                    padding='max_length',
+                                    truncation=True,
+                                    return_tensors="pt"
+                                    )
+        encoded_text2 = self.tokenizer2(text,
+                                    max_length=512,
+                                    add_special_tokens=True,
+                                    return_attention_mask=True,
+                                    padding='max_length',
+                                    truncation=True,
+                                    return_tensors="pt"
+                                    )
+
+        input_ids1 = encoded_text1['input_ids'].to(self.device)
+        attention_mask1 = encoded_text1['attention_mask'].to(self.device)
+
+
+        input_ids2 = encoded_text2['input_ids'].to(self.device)
+        attention_mask2 = encoded_text2['attention_mask'].to(self.device)
+
+
+        with torch.no_grad():                          
+            logits1 = self.model1(input_ids1, attention_mask1)[0]
+            logits2 = self.model2(input_ids2, attention_mask2)[0]
+
+            
+        log=torch.cat((logits1, logits2), 1)
+        
+        return log
+
+
+
+
+
     def predictConc(self, text:List[str]) -> List[str]:
         encoded_text1 = self.tokenizer1(text,
                                     max_length=512,
@@ -50,6 +90,7 @@ class BertRepEnsamble():
         with torch.no_grad():                          
             logits1 = self.model1(input_ids1, attention_mask1)[0]
             logits2 = self.model2(input_ids2, attention_mask2)[0]
+
 
         log=torch.cat((logits1, logits2), 1)
         log=log.flatten(start_dim= 1)

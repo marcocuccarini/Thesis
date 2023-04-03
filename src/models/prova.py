@@ -22,7 +22,7 @@ class BertRepEnsamble():
         self.model2.eval()
 
 
- def predictConcNoSoft(self, text:List[str]) -> List[str]:
+    def predictConcNoSoft(self, text:List[str]) -> List[str]:
         encoded_text1 = self.tokenizer1(text,
                                     max_length=512,
                                     add_special_tokens=True,

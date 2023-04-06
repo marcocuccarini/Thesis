@@ -228,14 +228,7 @@ class BertClsTrainer():
                     
                     loss = loss_fn(logits.view(-1, n_label), b_labels.view(-1))
                     
-                    if(loss>=loss_prev):
-                        cont+=1
-                    else:
-                        cont=0
-                    if cont>=patience:
-                        break
-
-                    loss_prev=loss
+                   
 
                 # Accumulate the validation loss.
                 total_val_loss += loss.item()
@@ -282,7 +275,7 @@ class BertClsTrainer():
 
 
     
-    def test(self, model, test_dataset, batch_size, loss_fn):
+    def test(self, model, test_dataset, batch_size, loss_fn, n_label):
 
         output_dict = {}
 
@@ -324,7 +317,7 @@ class BertClsTrainer():
                 #loss = outputs[0]
                 logits = outputs[1]
                 
-                loss = loss_fn(logits.view(-1, model.num_labels), b_labels.view(-1))
+                loss = loss_fn(logits.view(-1, n_labels), b_labels.view(-1))
                 
             # Accumulate the test loss.
             total_test_loss += loss.item()

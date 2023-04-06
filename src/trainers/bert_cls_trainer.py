@@ -38,7 +38,7 @@ class BertClsTrainer():
             'recall_none' : torchmetrics.Recall(num_classes=n_label, task='multiclass', average='none')
         })
         
-    def fit(self, model, train_dataset, val_dataset, batch_size, lr, n_epochs, loss_fn, patience):
+    def fit(self, model, train_dataset, val_dataset, batch_size, lr, n_epochs, loss_fn, n_label):
         
         output_dict = {}
         output_dict['train_metrics'] = []
@@ -138,7 +138,7 @@ class BertClsTrainer():
                     #loss = outputs[0]
                     logits = outputs[1]
 
-                    loss = loss_fn(logits.view(-1, model.num_labels), b_labels.view(-1))
+                    loss = loss_fn(logits.view(-1, n_label), b_labels.view(-1))
 
                 # Move logits and labels to CPU
                 logits = logits.detach().cpu()
@@ -226,7 +226,7 @@ class BertClsTrainer():
                     #loss = outputs[0]
                     logits = outputs[1]
                     
-                    loss = loss_fn(logits.view(-1, model.num_labels), b_labels.view(-1))
+                    loss = loss_fn(logits.view(-1, n_label), b_labels.view(-1))
                     
                     if(loss>=loss_prev):
                         cont+=1

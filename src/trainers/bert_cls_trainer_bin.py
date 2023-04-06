@@ -12,7 +12,7 @@ from src.utils.utils import plot_loss
 
 
 # This class is a wrapper for the training and testing of a Bert model for classification of dicscursive repertoires
-class BertClsTrainer():
+class BertClsTrainerBin():
     def __init__(self,n_label) -> None:
 
      
@@ -138,7 +138,7 @@ class BertClsTrainer():
                     #loss = outputs[0]
                     logits = outputs[1]
 
-                    loss = loss_fn(logits.view(-1, n_label), b_labels.view(-1))
+                    loss = loss_fn(logits, b_labels)
 
                 # Move logits and labels to CPU
                 logits = logits.detach().cpu()

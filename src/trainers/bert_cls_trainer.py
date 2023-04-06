@@ -317,7 +317,7 @@ class BertClsTrainer():
                 #loss = outputs[0]
                 logits = outputs[1]
                 
-                loss = loss_fn(logits.view(-1, n_labels), b_labels.view(-1))
+                loss = loss_fn(logits.view(-1, n_label), b_labels.view(-1))
                 
             # Accumulate the test loss.
             total_test_loss += loss.item()

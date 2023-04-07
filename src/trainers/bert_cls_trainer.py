@@ -161,7 +161,7 @@ class BertClsTrainer():
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
 
                 # Update parameters and take a step using the computed gradient in MIXED precision
-                scaler.step(optimizer, lr_scheduler)
+                scaler.step(optimizer)
                 scaler.update()
                 scheduler.step()
 

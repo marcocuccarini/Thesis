@@ -43,7 +43,7 @@ class HyperionDataset(torch.utils.data.Dataset):
     def __init__(self, df, tokenizer_name,classType=23):
         #fill_null_features(df)
         df = filter_empty_labels(df)
-        df = twitter_preprocess(df)
+        #df = twitter_preprocess(df)
         df = to_lower_case(df)
         uniform_labels(df)          
         tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)

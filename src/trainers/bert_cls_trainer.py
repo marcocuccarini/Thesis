@@ -67,7 +67,7 @@ class BertClsTrainer():
         optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
 
 
-        #scheduler = get_constant_schedule_with_warmup(optimizer, num_warmup_steps=400)
+        scheduler = get_constant_schedule_with_warmup(optimizer, num_warmup_steps=400)
         
         # Scaler for mixed precision
         scaler = torch.cuda.amp.GradScaler()
@@ -155,14 +155,14 @@ class BertClsTrainer():
                 total_train_loss += loss.item()
 
                 # Unscales the gradients of optimizer's assigned params in-place before the gradient clipping
-                scaler.unscale_(optimizer)
+                scaler.unscale_(optimizers=(optimizer, lr_scheduler))
 
                 # Clip the norm of the gradients to 1.0.
                 # This helps and prevent the "exploding gradients" problem.
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
 
                 # Update parameters and take a step using the computed gradient in MIXED precision
-                scaler.step(optimizer)
+                scaler.step(optimizers=(optimizer, lr_scheduler))
                 scaler.update()
                 #scheduler.step()
 

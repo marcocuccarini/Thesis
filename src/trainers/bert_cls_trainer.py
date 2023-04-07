@@ -155,7 +155,7 @@ class BertClsTrainer():
                 total_train_loss += loss.item()
 
                 # Unscales the gradients of optimizer's assigned params in-place before the gradient clipping
-                scaler.unscale_(optimizers=(optimizer, lr_scheduler))
+                scaler.unscale_(optimizers=(optimizer, scheduler))
 
                 # Clip the norm of the gradients to 1.0.
                 # This helps and prevent the "exploding gradients" problem.

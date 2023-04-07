@@ -67,7 +67,7 @@ class BertClsTrainer():
         optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
 
 
-        scheduler = get_constant_schedule_with_warmup(optimizer, num_warmup_steps=400)
+        #scheduler = get_constant_schedule_with_warmup(optimizer, num_warmup_steps=400)
         
         # Scaler for mixed precision
         scaler = torch.cuda.amp.GradScaler()
@@ -163,7 +163,7 @@ class BertClsTrainer():
                 # Update parameters and take a step using the computed gradient in MIXED precision
                 scaler.step(optimizer)
                 scaler.update()
-                scheduler.step()
+                #scheduler.step()
 
 
             # Compute the average loss over all of the batches.

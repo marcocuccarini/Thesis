@@ -145,7 +145,7 @@ class BertClsTrainerMulti():
                 probabilities = tf.nn.sigmoid(logits)
                 labels = tf.cast(labels,tf.float32)
                 per_example_loss = tf.nn.sigmoid_cross_entropy_with_logits(labels=labels, logits=logits)
-                loss = tf.reduce_mean (per_ example_ loss)
+                loss = tf.reduce_mean(per_example_loss)
                 label_ids = b_labels.to('cpu')
             
 

@@ -133,8 +133,7 @@ class BertClsTrainerMulti():
 
                     outputs = model(b_input_ids, 
                                     attention_mask=b_input_mask, 
-                                    labels=b_labels,
-                                    use_one_hot_embedding=True)
+                                    labels=b_labels)
                 
 
                 output_layer = model.get_pooled_output()

@@ -70,8 +70,7 @@ class BertRep():
         with torch.no_grad():                          
             logits = self.model(input_ids, attention_mask)[0]
 
-        return torch.stack(logits.cpu()).tolist()
-   
+        return logits.cpu()
     
     def hidden_states(self, text:List[str]) -> List[str]:
         encoded_text = self.tokenizer(text,

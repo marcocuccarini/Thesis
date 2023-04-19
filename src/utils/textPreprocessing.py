@@ -1,13 +1,7 @@
-import random
-import os
 
-import torch
-import numpy as np
-import datetime
-import matplotlib.pyplot as plt
-import pandas as pd
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import ConfusionMatrixDisplay
+
+import emoji
+
 
 punct = [',', '.', '"', ':', ')', '(', '-', '!', '?', '|', ';', "'", '$', '&', '/', '[', ']', '>', '%', '=', '#', '*', '+', '\\', '•',  '~', '@', '£', 
  '·', '_', '{', '}', '©', '^', '®', '`',  '<', '→', '°', '€', '™', '›',  '♥', '←', '×', '§', '″', '′', 'Â', '█', '½', 'à', '…', 

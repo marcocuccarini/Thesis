@@ -2,7 +2,7 @@
 
 
 class BERTDataset():
-    def __init__(self, df, tokenizer, max_len):
+    def __init__(self, df, tokenizer, max_len, target_cols):
         self.df = df
         self.max_len = max_len
         self.text = df.text

@@ -1,7 +1,7 @@
 
 
 
-class BERTDataset(Dataset):
+class BERTDataset():
     def __init__(self, df, tokenizer, max_len):
         self.df = df
         self.max_len = max_len

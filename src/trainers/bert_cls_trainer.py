@@ -10,6 +10,7 @@ from transformers import get_constant_schedule_with_warmup
 from src.utils.utils import format_time, plot_confusion_matrix, plot_f1
 from src.utils.utils import plot_loss
 from sklearn.metrics import f1_score
+from scipy.special import softmax
 
 
 # This class is a wrapper for the training and testing of a Bert model for classification of dicscursive repertoires
@@ -230,10 +231,10 @@ class BertClsTrainer():
                     loss = loss_fn(logits.view(-1, n_label), b_labels.view(-1))
 
                 preds = torch.argmax(logits, dim=1).flatten
-                print(b_labels.view(-1))
-                print(preds)
-                print(logits)
-                total_val_F1 += f1_score(preds, b_labels.view(-1), average='macro')
+              
+                res=softmax(preds.numpy()).argmax(-1)
+
+                total_val_F1 += f1_score(logits, b_labels.view(-1), average='macro')
                     
                    
 

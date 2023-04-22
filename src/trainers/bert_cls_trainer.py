@@ -234,7 +234,7 @@ class BertClsTrainer():
               
                 res=softmax(logits.cpu().numpy()).argmax(-1)
 
-                total_val_F1 += f1_score(res, b_labels.view(-1), average='macro')
+                total_val_F1 += f1_score(res, b_labels.view(-1).cpu(), average='macro')
                     
                    
 

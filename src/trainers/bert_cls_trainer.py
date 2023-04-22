@@ -196,6 +196,7 @@ class BertClsTrainer():
             # Put the model in evaluation mode: the dropout layers behave differently
             model.eval()
 
+            total_val_F1 = 0
             total_val_loss = 0
 
             # Evaluate data for one epoch
@@ -226,6 +227,9 @@ class BertClsTrainer():
                     logits = outputs[1]
                     
                     loss = loss_fn(logits.view(-1, n_label), b_labels.view(-1))
+
+                preds = torch.argmax(logits, dim=1).flatten
+                total_val_F1 += f1_score(logits.view(-1, n_label), b_labels.view(-1), average='macro')
                     
                    
 
@@ -249,12 +253,15 @@ class BertClsTrainer():
             
             # Compute the average loss over all of the batches.
             avg_val_loss = total_val_loss / len(validation_dataloader)
+            avg_val_F1 = total_val_F1 / len(validation_dataloader)
 
             output_dict['val_metrics'].append(final_metrics)
             output_dict['val_loss'].append(avg_val_loss)
             
             # Measure how long the validation run took.
             validation_time = format_time(time.time() - t0)
+
+            print("  Validation F1: {0:.4f}".format(avg_val_F1))
             
             print("  Validation Loss: {0:.2f}".format(avg_val_loss))
             print("  Validation took: {:}".format(validation_time))

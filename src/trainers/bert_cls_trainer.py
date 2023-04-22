@@ -230,6 +230,9 @@ class BertClsTrainer():
                     loss = loss_fn(logits.view(-1, n_label), b_labels.view(-1))
 
                 preds = torch.argmax(logits, dim=1).flatten
+                print(b_labels.view(-1))
+                print(preds)
+                print(logits)
                 total_val_F1 += f1_score(preds, b_labels.view(-1), average='macro')
                     
                    

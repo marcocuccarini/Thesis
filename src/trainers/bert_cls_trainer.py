@@ -9,6 +9,7 @@ from transformers import get_constant_schedule_with_warmup
 
 from src.utils.utils import format_time, plot_confusion_matrix, plot_f1
 from src.utils.utils import plot_loss
+from sklearn.metrics import f1_score
 
 
 # This class is a wrapper for the training and testing of a Bert model for classification of dicscursive repertoires

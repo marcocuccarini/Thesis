@@ -9,7 +9,7 @@ from transformers import get_constant_schedule_with_warmup
 
 from src.utils.utils import format_time, plot_confusion_matrix, plot_f1
 from src.utils.utils import plot_loss
-
+from sklearn.metrics import f1_score
 
 # This class is a wrapper for the training and testing of a Bert model for classification of dicscursive repertoires
 class BertClsTrainerBin():
@@ -198,6 +198,8 @@ class BertClsTrainerBin():
             model.eval()
 
             total_val_loss = 0
+            total_val_F1 = 0
+
 
             # Evaluate data for one epoch
             for batch in validation_dataloader:
@@ -229,8 +231,12 @@ class BertClsTrainerBin():
                     loss = loss_fn(logits.view(-1, n_label), b_labels.view(-1))
                     
                    
-                preds = torch.argmax(logits, dim=1).flatten()
-                # Accumulate the validation loss.
+                preds = torch.argmax(logits, dim=1).flatten
+
+                total_val_F1 += f1_score(logits.view(-1, n_label), b_labels.view(-1), average='macro')
+
+
+                                # Accumulate the validation loss.
                 total_val_loss += loss.item()
 
                 # Move logits and labels to CPU
@@ -251,15 +257,17 @@ class BertClsTrainerBin():
             # Compute the average loss over all of the batches.
             avg_val_loss = total_val_loss / len(validation_dataloader)
 
+            avg_val_F1 = total_val_F1 / len(validation_dataloader)
+
             output_dict['val_metrics'].append(final_metrics)
             output_dict['val_loss'].append(avg_val_loss)
             
             # Measure how long the validation run took.
             validation_time = format_time(time.time() - t0)
             
-            print("  Validation Loss: {0:.2f}".format(avg_val_loss))
+            print("  Validation Loss: {0:.4f}".format(avg_val_loss))
 
-            print("Validation F1: {0:.2f}".format(avg_val_loss))
+            print("Validation F1: {0:.4f}".format(avg_val_F1))
             print("  Validation took: {:}".format(validation_time))
 
         print("")

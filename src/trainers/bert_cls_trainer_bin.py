@@ -232,8 +232,9 @@ class BertClsTrainerBin():
                     
                    
                 preds = torch.argmax(logits, dim=1).flatten
+                res=softmax(np.array(preds)).argmax(-1)
 
-                total_val_F1 += f1_score(logits.view(-1, n_label), b_labels.view(-1), average='macro')
+                total_val_F1 += f1_score(res, b_labels.view(-1), average='macro')
 
 
                                 # Accumulate the validation loss.

@@ -232,7 +232,7 @@ class BertClsTrainer():
 
                 preds = torch.argmax(logits, dim=1).flatten
               
-                res=softmax(preds.numpy()).argmax(-1)
+                res=softmax(logits.numpy()).argmax(-1)
 
                 total_val_F1 += f1_score(logits, b_labels.view(-1), average='macro')
                     

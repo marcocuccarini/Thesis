@@ -67,7 +67,7 @@ class BertClsTrainerBin():
         optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
 
 
-        scheduler = get_constant_schedule_with_warmup(optimizer, num_warmup_steps=400)
+        #scheduler = get_constant_schedule_with_warmup(optimizer, num_warmup_steps=400)
         
         # Scaler for mixed precision
         scaler = torch.cuda.amp.GradScaler()
@@ -229,7 +229,7 @@ class BertClsTrainerBin():
                     loss = loss_fn(logits.view(-1, n_label), b_labels.view(-1))
                     
                    
-
+                preds = torch.argmax(logits, dim=1).flatten()
                 # Accumulate the validation loss.
                 total_val_loss += loss.item()
 
@@ -258,6 +258,8 @@ class BertClsTrainerBin():
             validation_time = format_time(time.time() - t0)
             
             print("  Validation Loss: {0:.2f}".format(avg_val_loss))
+
+            print("Validation F1: {0:.2f}".format(avg_val_loss))
             print("  Validation took: {:}".format(validation_time))
 
         print("")

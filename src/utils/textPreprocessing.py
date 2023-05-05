@@ -21,6 +21,13 @@ from sklearn.preprocessing import MultiLabelBinarizer
 
 
 
+drop_rap_freq=[643/35401, 5625/35401, 440/35401, 4402/35401, 2758/35401, 1163/35401, 2122/35401, 616/35401, 639/35401, 705/35401, 1395/35401, 1412/35401, 312/35401, 471/35401, 1102/35401, 638/35401, 1168/35401, 1065/35401, 4882/35401, 1343/35401, 1918/35401, 256/35401, 326/35401]
+drop_rap_pred=[0.01,0.26,0.36,0.30,0.08,0.18,0.26,0.42,0.68,0.11,0.2,0.02,0.34,0.12,0.27,0.12,0.3,0.46,0.58,0.68,0.35,0.31,0.43]
+drop_name=['Dichiarazione di intenti', 'Sancire', 'Giustificazione', 'Commento', 'Giudizio', 'Non risposta', 'Valutazione', 'Possibilità', 'Conferma', 'Implicazione', 'Specificazione', 'Contrapposizione', 'Considerazione', 'Causa', 'Ridimensionamento', 'Deresponsabilizzazione', 'Previsione', 'Generalizzazione', 'Descrizione', 'Opinione', 'Prescrizione', 'Proposta','Anticipazione']
+drop_name,drop_rap_freq = zip(*sorted(zip(drop_name, drop_rap_freq)))
+drop_rap_freq=list(drop_rap_freq)
+
+
 punct = [',', '.', '"', ':', ')', '(', '-', '!', '?', '|', ';', "'", '$', '&', '/', '[', ']', '>', '%', '=', '#', '*', '+', '\\', '•',  '~', '@', '£', 
  '·', '_', '{', '}', '©', '^', '®', '`',  '<', '→', '°', '€', '™', '›',  '♥', '←', '×', '§', '″', '′', 'Â', '█', '½', 'à', '…', 
  '“', '★', '”', '–', '●', 'â', '►', '−', '¢', '²', '¬', '░', '¶', '↑', '±', '¿', '▾', '═', '¦', '║', '―', '¥', '▓', '—', '‹', '─', 

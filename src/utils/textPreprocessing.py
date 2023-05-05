@@ -149,6 +149,9 @@ def addEncSimple(df, test_df,dropout):
   return df, test_df
 
 
+def sigmoid(x):
+  return 1 / (1 + math.exp(-x))
+
 def addEncComp(df, test_df, position,dropout,drop_index):
   from ast import literal_eval
   df['Rep Out'] = df['Rep Out'].apply(literal_eval)
@@ -198,5 +201,8 @@ def addEncComp(df, test_df, position,dropout,drop_index):
     test_df['text']=np.array(listStringtest+test_df['text'])
 
   return df, test_df
+
+
+
 
 

@@ -1,6 +1,5 @@
 
 
-import emoji
 import yaml
 import sys
 import random
@@ -18,6 +17,8 @@ import torch
 from torch.utils.data import Dataset, DataLoader, RandomSampler, SequentialSampler
 from transformers import BertTokenizer, AutoTokenizer, BertModel, BertConfig, AutoModel, AdamW, AutoModelForSequenceClassification
 import warnings
+from sklearn.preprocessing import MultiLabelBinarizer
+
 
 
 punct = [',', '.', '"', ':', ')', '(', '-', '!', '?', '|', ';', "'", '$', '&', '/', '[', ']', '>', '%', '=', '#', '*', '+', '\\', '•',  '~', '@', '£', 

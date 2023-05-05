@@ -2,7 +2,8 @@
 
 import emoji
 import yaml
-import sys 
+import sys
+import random
 import os
 import re
 import string
@@ -96,3 +97,105 @@ def text_preprocessing_pipeline(text):
     text = clean_special_chars(text, punct, punct_mapping)
     text = remove_space(text)
     return text
+
+
+def addEncSimple(df, test_df,dropout):
+  from ast import literal_eval
+  df['Repertori_predetti'] = np.array(df['Repertori_predetti'].apply(literal_eval))
+  test_df['Repertori_predetti'] = np.array(test_df['Repertori_predetti'].apply(literal_eval))
+
+  one_hot = MultiLabelBinarizer()
+  enc=one_hot.fit_transform(df['Repertori_predetti'])
+  enc_test=one_hot.fit_transform(test_df['Repertori_predetti'])
+
+  enc=np.array(enc)
+  enc_test=np.array(enc_test)
+  listString=[]
+  for i in enc:
+      cont=0
+      string=" "
+      for j in i:
+        r=random.random()
+        
+        if(r<(1-dropout)):
+          string+=" "
+          string+=str(j)
+        else:
+          string+=""
+          string+=""
+        cont+=1
+          
+
+      listString.append(string)
+  listStringtest=[]
+  for i in enc_test:
+      cont=0
+      string=" "
+      for j in i:
+        r=random.random()
+        if(r<(1-dropout)):
+            string+=" "
+            string+=str(j)
+        else:
+          string+=""
+          string+=""
+        cont+=1
+
+      listStringtest.append(string)
+  df['text']=(df['text']+listString)
+  test_df['text']=(test_df['text']+listStringtest)
+
+  return df, test_df
+
+
+def addEncComp(df, test_df, position,dropout,drop_index):
+  from ast import literal_eval
+  df['Rep Out'] = df['Rep Out'].apply(literal_eval)
+  test_df['Rep Out'] = test_df['Rep Out'].apply(literal_eval)
+  listString=[]
+
+
+  enc=sigmoid_v(np.array(df['Rep Out'].to_list()))
+  enc_test=sigmoid_v(np.array(test_df['Rep Out'].to_list()))
+  #enc=(np.array(df['Rep Out'].to_list()))
+  #enc_test=(np.array(test_df['Rep Out'].to_list()))
+
+  for i in enc:
+      string=" "
+      cont=0
+      for j in i[0]:
+        
+        r=random.random()
+        if(r<(1-dropout*drop_rap_freq[cont]*drop_index)):
+          string+=" "
+          string+=str(j)
+        else:
+          string+=" "
+          string+="0"
+        cont+=1
+      listString.append(string)
+  listStringtest=[]
+  for i in enc_test:
+      string=" "
+      cont=0
+      for j in i[0]:
+        r=random.random()
+        if(r<(1-dropout*drop_rap_pred[cont]*drop_index)):
+          string+=" "
+          string+=str(j)
+
+        else:
+          string+=" "
+          string+="0"
+        cont+=1
+      listStringtest.append(string)
+  if position:
+    df['text']=np.array(df['text']+listString)
+    test_df['text']=np.array(test_df['text']+listStringtest)
+  else:
+    df['text']=np.array(+listString+df['text'])
+    test_df['text']=np.array(listStringtest+test_df['text'])
+
+  return df, test_df
+
+

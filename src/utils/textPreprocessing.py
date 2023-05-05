@@ -1,5 +1,4 @@
-
-
+from ast import literal_eval
 import yaml
 import sys
 import random
@@ -148,12 +147,12 @@ def addEncSimple(df, test_df,dropout):
 
   return df, test_df
 
-
 def sigmoid(x):
   return 1 / (1 + math.exp(-x))
 
 def addEncComp(df, test_df, position,dropout,drop_index):
-  from ast import literal_eval
+  sigmoid_v = np.vectorize(sigmoid)
+
   df['Rep Out'] = df['Rep Out'].apply(literal_eval)
   test_df['Rep Out'] = test_df['Rep Out'].apply(literal_eval)
   listString=[]

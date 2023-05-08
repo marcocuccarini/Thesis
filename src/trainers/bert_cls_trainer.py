@@ -180,7 +180,7 @@ class BertClsTrainer():
             training_time = format_time(time.time() - t0)
 
             print("")
-            print("  Average training loss: {0:.3f}".format(avg_train_loss))
+            print("  Average training loss: {0:.4f}".format(avg_train_loss))
             print("  Training epoch took: {:}".format(training_time))
 
             # ========================================
@@ -268,7 +268,7 @@ class BertClsTrainer():
 
             print("  Validation F1: {0:.4f}".format(avg_val_F1))
             
-            print("  Validation Loss: {0:.2f}".format(avg_val_loss))
+            print("  Validation Loss: {0:.4f}".format(avg_val_loss))
             print("  Validation took: {:}".format(validation_time))
 
         print("")

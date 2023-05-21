@@ -158,7 +158,7 @@ def addEncSimple(df, test_df,dropout):
 def sigmoid(x):
   return 1 / (1 + math.exp(-x))
 
-def addEncComp(df, test_df, position,dropout,drop_index):
+def addEncComp(df, test_df, position,dropout,drop_index,round_flag):
   sigmoid_v = np.vectorize(sigmoid)
 
   df['Rep Out'] = df['Rep Out'].apply(literal_eval)
@@ -179,7 +179,12 @@ def addEncComp(df, test_df, position,dropout,drop_index):
         r=random.random()
         if(r<(1-dropout*drop_rap_freq[cont]*drop_index)):
           string+=" "
-          string+=str(j)
+          if round_flag:
+
+            string+=str(round(j, 10))
+          else:
+
+            string+=str(j)
         else:
           string+=" "
           string+="0"
@@ -193,7 +198,12 @@ def addEncComp(df, test_df, position,dropout,drop_index):
         r=random.random()
         if(r<(1-dropout*drop_rap_pred[cont]*drop_index)):
           string+=" "
-          string+=str(j)
+          if round_flag:
+
+            string+=str(round(j, 10))
+          else:
+
+            string+=str(j)
 
         else:
           string+=" "

@@ -181,7 +181,7 @@ def addEncComp(df, test_df, position,dropout,drop_index,round_flag):
           string+=" "
           if round_flag:
 
-            string+=str(round(j, 10))
+            string+=str(round(j, 5))
           else:
 
             string+=str(j)
@@ -200,7 +200,7 @@ def addEncComp(df, test_df, position,dropout,drop_index,round_flag):
           string+=" "
           if round_flag:
 
-            string+=str(round(j, 10))
+            string+=str(round(j, 5))
           else:
 
             string+=str(j)

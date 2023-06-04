@@ -35,6 +35,8 @@ LABELS = [
                 'valutazione'
         ]
 
+LABEL_ENG=['sd', 'aa', 'sv', 'fo_o_fw_"_by_bc', 'b', 'qy', 'ny', 'bk', 'ba', '%', 'fc', 'h', 'ar', 'nn', 'qh', 'qy^d', '^2', 'bf', 'qw', 'qo', 'na', 'aap_am', 'ad', '^h', 'qrr', 'bh', 'br', 'no', 'b^m', 'arp_nd', '^q', 't1', 'fp', 'fa', 'ft', 'bd', 'qw^d', 'ng', '^g', 't3', 'oo_co_cc']
+
 LABELS_MACRO=['green','yellow','red']
 
 class HyperionDataset(torch.utils.data.Dataset):
@@ -107,6 +109,12 @@ def uniform_labels(df):
 
 
 def encode_labels(df,classType=23):
+  if classType==len(LABEL_ENG):
+    le = preprocessing.LabelEncoder()
+    le.fit(LABEL_ENG)
+    return le.transform(df['Repertorio'])
+    
+
   if(classType==23):
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)

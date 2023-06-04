@@ -108,12 +108,12 @@ def uniform_labels(df):
     df['Repertorio'].replace('previsioni','previsione', inplace=True)
 
 
-def encode_labels(df,classType=23):
+def encode_labels(df,classType=41):
   if classType==len(LABEL_ENG):
     le = preprocessing.LabelEncoder()
     le.fit(LABEL_ENG)
     return le.transform(df['Repertorio'])
-    
+
 
   if(classType==23):
     le = preprocessing.LabelEncoder()

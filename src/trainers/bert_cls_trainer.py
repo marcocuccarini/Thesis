@@ -146,6 +146,8 @@ class BertClsTrainer():
                     #loss = outputs[0]
                     logits = outputs[1]
 
+                    import numpy as np
+
                     print(np.argmax(logits, axis=0))
 
 

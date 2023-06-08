@@ -147,6 +147,7 @@ class BertClsTrainer():
                     logits = outputs[1]
 
                     import numpy as np
+                    logits = logits.detach().cpu()
 
                     print(np.argmax(logits, axis=0))
 

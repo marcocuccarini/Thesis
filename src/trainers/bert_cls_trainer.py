@@ -126,6 +126,10 @@ class BertClsTrainer():
                 b_input_mask = batch['attention_mask'].to(device)
                 b_labels = batch['labels'].to(device)
 
+                print(b_input_ids)
+                print(b_input_mask)
+                print(b_labels)
+
                 # clear any previously calculated gradients before performing a
                 # backward pass
                 model.zero_grad()  
@@ -140,9 +144,7 @@ class BertClsTrainer():
                     #loss = outputs[0]
                     logits = outputs[1]
 
-
-
-                    loss = loss_fn(logits.view(n_label), b_labels.view(-1))
+                    loss = loss_fn(logits.view(-1, n_label), b_labels.view(-1))
 
                 # Move logits and labels to CPU
                 logits = logits.detach().cpu()

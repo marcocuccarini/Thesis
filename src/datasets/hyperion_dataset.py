@@ -84,44 +84,24 @@ def uniform_labels(df):
 
 
 def encode_labels(df,classType=41):
-  if classType==len(LABEL_ENG):
-    le = preprocessing.LabelEncoder()
-    le.fit(LABEL_ENG)
-    return le.transform(df['Repertorio'])
-
-
-  if(classType==23):
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
     return le.transform(df['Repertorio'])
-  else:
-    le = preprocessing.LabelEncoder()
-    le.fit(LABELS_MACRO)
-    return le.transform(df['Repertorio'])
+  
     
 
 def encode_str_label(rep:str,classType=23):
-  if(classType==23):
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
     return le.transform([rep])
-  else:
-    
-    le = preprocessing.LabelEncoder()
-    le.fit(LABELS_MACRO)
-    return le.transform([rep])
-    
 
+    
 def decode_labels(encoded_labels,classType=23):
-  if(classType==23):
     le = preprocessing.LabelEncoder()
     le.fit(LABELS)
     return le.inverse_transform(encoded_labels)
-  else:
-    le = preprocessing.LabelEncoder()
-    le.fit(LABELS_MACRO)
-    return le.inverse_transform(encoded_labels)
-    
+  
+
 
 def twitter_preprocess(text:str) -> str:
     """

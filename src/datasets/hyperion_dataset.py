@@ -9,35 +9,10 @@ from ekphrasis.classes.preprocessor import TextPreProcessor
 from ekphrasis.classes.tokenizer import SocialTokenizer
 from ekphrasis.dicts.emoticons import emoticons
 
-LABELS = [
-                'anticipazione',
-                'causa',
-                'commento',
-                'conferma',
-                'considerazione',
-                'contrapposizione',
-                'deresponsabilizzazione',
-                'descrizione',
-                'dichiarazione di intenti',
-                'generalizzazione',
-                'giudizio',
-                'giustificazione',
-                'implicazione',
-                'non risposta',
-                'opinione',
-                'possibilità',
-                'prescrizione',
-                'previsione',
-                'proposta',
-                'ridimensionamento',
-                'sancire',
-                'specificazione',
-                'valutazione'
-        ]
 
-LABEL_ENG=['sd', 'aa', 'sv', 'fo_o_fw_"_by_bc', 'b', 'qy', 'ny', 'bk', 'ba', '%', 'fc', 'h', 'ar', 'nn', 'qh', 'qy^d', '^2', 'bf', 'qw', 'qo', 'na', 'aap_am', 'ad', '^h', 'qrr', 'bh', 'br', 'no', 'b^m', 'arp_nd', '^q', 't1', 'fp', 'fa', 'ft', 'bd', 'qw^d', 'ng', '^g', 't3', 'oo_co_cc']
 
-LABELS_MACRO=['green','yellow','red']
+LABELS=['sd', 'aa', 'sv', 'fo_o_fw_"_by_bc', 'b', 'qy', 'ny', 'bk', 'ba', '%', 'fc', 'h', 'ar', 'nn', 'qh', 'qy^d', '^2', 'bf', 'qw', 'qo', 'na', 'aap_am', 'ad', '^h', 'qrr', 'bh', 'br', 'no', 'b^m', 'arp_nd', '^q', 't1', 'fp', 'fa', 'ft', 'bd', 'qw^d', 'ng', '^g', 't3', 'oo_co_cc']
+
 
 class HyperionDataset(torch.utils.data.Dataset):
     

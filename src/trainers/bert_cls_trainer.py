@@ -137,10 +137,10 @@ class BertClsTrainer():
                                     attention_mask=b_input_mask, 
                                     labels=b_labels)
                 
-                    #loss = outputs[0]
-                    logits = outputs[1]
+                    loss = outputs[0]
+                    #logits = outputs[1]
 
-                    loss = loss_fn(logits.view(-1, n_label), b_labels.view(-1))
+                    #loss = loss_fn(logits.view(-1, n_label), b_labels.view(-1))
 
                 # Move logits and labels to CPU
                 logits = logits.detach().cpu()

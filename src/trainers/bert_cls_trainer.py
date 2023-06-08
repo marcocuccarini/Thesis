@@ -140,11 +140,14 @@ class BertClsTrainer():
                                     labels=b_labels)
 
                     #print(outputs)
+                    print(outputs[0])
+                    print(outputs[1])
                 
                     #loss = outputs[0]
-                    logits = outputs[1]
+                    logits = outputs[0]
 
-                    loss = loss_fn(logits.view(-1), b_labels.view(-1))
+
+                    loss = loss_fn(logits, b_labels)
 
                 # Move logits and labels to CPU
                 logits = logits.detach().cpu()

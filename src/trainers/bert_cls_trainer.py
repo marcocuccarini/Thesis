@@ -127,7 +127,6 @@ class BertClsTrainer():
                 b_labels = batch['labels'].to(device)
 
 
-                print(b_labels)
 
                 # clear any previously calculated gradients before performing a
                 # backward pass
@@ -139,6 +138,8 @@ class BertClsTrainer():
                     outputs = model(b_input_ids, 
                                     attention_mask=b_input_mask, 
                                     labels=b_labels)
+
+                    print(outputs)
                 
                     #loss = outputs[0]
                     logits = outputs[1]

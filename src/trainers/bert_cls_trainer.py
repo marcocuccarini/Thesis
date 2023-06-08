@@ -149,7 +149,7 @@ class BertClsTrainer():
                     import numpy as np
                     logits = logits.detach().cpu()
 
-                    print(np.argmax(logits, axis=0))
+                    print(np.argmax(logits, axis=1))
 
 
                     loss = loss_fn(logits, b_labels)

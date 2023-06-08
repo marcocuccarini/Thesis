@@ -140,9 +140,6 @@ class BertClsTrainer():
                     #loss = outputs[0]
                     logits = outputs[1]
 
-                    print(len(outputs[0]))
-                    print(len(outputs[1]))
-
 
 
                     loss = loss_fn(logits.view(n_label), b_labels.view(-1))

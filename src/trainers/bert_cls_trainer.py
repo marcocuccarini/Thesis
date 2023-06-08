@@ -126,8 +126,7 @@ class BertClsTrainer():
                 b_input_mask = batch['attention_mask'].to(device)
                 b_labels = batch['labels'].to(device)
 
-                print(b_input_ids)
-                print(b_input_mask)
+
                 print(b_labels)
 
                 # clear any previously calculated gradients before performing a

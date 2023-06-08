@@ -140,11 +140,11 @@ class BertClsTrainer():
                                     labels=b_labels)
 
                     #print(outputs)
-                    print(outputs[0])
                     print(outputs[1])
+                    print(b_labels)
                 
                     #loss = outputs[0]
-                    logits = outputs[0]
+                    logits = outputs[1]
 
 
                     loss = loss_fn(logits, b_labels)
